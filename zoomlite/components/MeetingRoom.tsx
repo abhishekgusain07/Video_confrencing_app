@@ -1,5 +1,13 @@
 import { cn } from '@/lib/utils';
-import { CallControls, CallParticipantsList, CallStatsButton, CallingState, PaginatedGridLayout, SpeakerLayout, useCallStateHooks } from '@stream-io/video-react-sdk';
+import { 
+  CallControls, 
+  CallParticipantsList, 
+  CallStats, 
+  CallStatsButton, 
+  CallingState, 
+  PaginatedGridLayout, 
+  SpeakerLayout, 
+  useCallStateHooks } from '@stream-io/video-react-sdk';
 import React, { useState } from 'react'
 import {
   DropdownMenu,
@@ -10,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { LayoutList, Users } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import EndCallButton from './EndCallButton';
 import Loader from './Loader';
 
@@ -18,12 +26,13 @@ import Loader from './Loader';
 type callLayoutType = "grid" | "speaker-left" | "speaker-right";
 
 const MeetingRoom = () => {
+  const router = useRouter();
   const SearchParams = useSearchParams();
   const isPersonalRoom = !!SearchParams.get('personal')
   const [layout, setLayout] = useState<callLayoutType>('speaker-left')
   
 
-  const [showParticipants, setShowParticipants] = useState(true)
+  const [showParticipants, setShowParticipants] = useState(false)
 
   const {useCallCallingState} = useCallStateHooks();
   const callingState = useCallCallingState();
@@ -43,7 +52,7 @@ const MeetingRoom = () => {
         />
     }
   }
-
+  
   
   return (
     <section className ="relative h-screen w-full overflow-hidden pt-4 text-white">
@@ -55,8 +64,9 @@ const MeetingRoom = () => {
           <CallParticipantsList onClose={() => setShowParticipants(false)}/>
         </div>
       </div>
-      <div className='fixex bottom-0 flex w-full items-center justify-center gap-5 flex-wrap'>
-        <CallControls />
+      {/* video layout and call controls */}
+      <div className='fixed bottom-0 flex w-full items-center justify-center gap-5'>
+        <CallControls onLeave={() => {router.push('/')}}/>
         <DropdownMenu>
         <div className='flex items-center'>
           <DropdownMenuTrigger className='cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2 hover:bg-[#4c535b]'>
@@ -67,7 +77,7 @@ const MeetingRoom = () => {
           {
             ['Grid', 'Speaker-Left', 'Speaker-Right'].map((item, index) => (
               <div key={index}>
-                <DropdownMenuItem className='cursor-pointer'
+                <DropdownMenuItem 
                 onClick={() => {
                   setLayout(item.toLowerCase() as callLayoutType)
                 }} 
