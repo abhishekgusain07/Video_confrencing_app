@@ -41,7 +41,7 @@ const MeetingModal = ({isOpen, onClose, title, buttonText, children, className, 
                     {buttonIcon && (
                         <Image src={buttonIcon} alt="button" width={13} height={13}/>
                     )} &nbsp;
-                    {buttonText &&  'Schedule Meeting'}
+                    {buttonText ||  'Schedule Meeting'}
                 </Button>
             </div>
         </DialogContent>

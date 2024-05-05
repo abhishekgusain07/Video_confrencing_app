@@ -105,13 +105,13 @@ const MeetingTypeList = () => {
                 <label className='text-base text-normal leading-[22px] text-sky-2'>
                     Add a description
                 </label>
-                <Textarea className='border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0'
+                <Textarea className='text-black border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0'
                 onChange={(e) => {
                     setValues({...values,description:e.target.value})
                 }}/>
             </div>
             <div className='flex flex-col w-full gap-2.5'>
-            <label className='text-base text-normal leading-[22px] text-sky-2'>
+                <label className='text-base text-normal leading-[22px]  text-sky-2'>
                     Select Date and Time
                 </label>
                 <ReactDatePicker 
@@ -122,7 +122,7 @@ const MeetingTypeList = () => {
                     timeIntervals={15}
                     timeCaption='time'
                     dateFormat="MMMM d, yyyy h:mm aa"
-                    className='w-full rounded bg-dark-3 p-2 focus:outline-none'
+                    className='w-full rounded bg-dark-3 p-2 focus:outline-none text-dark-2'
                 />
             </div>
         </MeetingModal>
@@ -146,7 +146,7 @@ const MeetingTypeList = () => {
         isOpen = {meetingState === 'isInstantMeeting'}
         onClose = {() => setMeetingState(undefined)}
         title = "Start an Instant Meeting"
-        className = "text-center"
+        className = "text-center text-white"
         buttonText = "Start-meeting"
         handleClick = {createMeeting}
     />
